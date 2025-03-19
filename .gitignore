@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/krox-editor
+krox-editor.so
+krox-editor.dylib
+krox-editor.dll
+krox-editor.a
+krox-editor.lib
+krox-editor-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
