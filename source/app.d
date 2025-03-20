@@ -49,6 +49,20 @@ void log(int level, string arg)
 	}
 }
 
+// structs
+struct TextArea
+{
+	// SDL
+	TTF_Font* font;
+
+	// Krox
+	string[] lines;
+	int cursor_pos_max = 0;
+	int cursor_pos = 0;
+	int cursor_line = 0;
+}
+
+// Krox
 int main(string[] args)
 {
 	//version (Windows)
@@ -79,6 +93,7 @@ int main(string[] args)
 	}
 
 	SDL_Init(SDL_INIT_VIDEO);
+	TTF_Init();
 
 	string continuation;
 	{
@@ -90,10 +105,11 @@ int main(string[] args)
 
 		continuation = data[uniform(0, data.length)].str;
 	}
-	SDL_Window* window = SDL_CreateWindow(("Krox: "~continuation).ptr,
-        800, 600, 0);
+	SDL_Window* window = SDL_CreateWindow(("Krox: " ~ continuation).ptr,
+		800, 600, 0);
 
-	if (window is null) {
+	if (window is null)
+	{
 		log(LogLevel.ERROR, "Couldn't create a SDL window, error message: ");
 		log(LogLevel.ERROR, to!string(SDL_GetError()));
 		SDL_Quit();
@@ -102,14 +118,17 @@ int main(string[] args)
 	// main event loop
 	SDL_Event event;
 	auto running = true;
-	while (running) {
-        while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_EVENT_QUIT) {
-                running = false;
-            }
-        }
-        SDL_Delay(16); // Sleep to reduce CPU usage
-    }
+	while (running)
+	{
+		while (SDL_PollEvent(&event) != 0)
+		{
+			if (event.type == SDL_EVENT_QUIT)
+			{
+				running = false;
+			}
+		}
+		SDL_Delay(16); // Sleep to reduce CPU usage
+	}
 
 	SDL_DestroyWindow(window);
 	SDL_Quit();
